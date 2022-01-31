@@ -5,6 +5,5 @@
 // @description  Adding a wheelbarrow function.
 // @author       Kisin Wen
 // @match        https://live.bilibili.com/*
-// @icon         https://www.google.com/s2/favicons?domain=tampermonkey.net
 // @grant        none
 // ==/UserScript==
