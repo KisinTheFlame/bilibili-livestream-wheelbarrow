@@ -81,5 +81,4 @@
             toolbar.appendChild(createWheelBarrowButton(textArea, sendButton));
         }
     }, 500);
-    test();
 })();
