@@ -6,7 +6,7 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
-    "build": "tsc"
+    "build": "tsc && type INFORMATION > tmp && type bundle.js >> tmp && type tmp > bundle.js && del tmp"
   },
   "keywords": [],
   "author": "",
