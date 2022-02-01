@@ -28,7 +28,7 @@
             line1.style.width = "100%";
             const addButton: HTMLButtonElement = document.createElement("button");
             addButton.style.width = "50%";
-            addButton.textContent = "+"
+            addButton.textContent = "+";
             const deleteButton: HTMLButtonElement = document.createElement("button");
             deleteButton.style.width = "50%";
             deleteButton.textContent = "-";
@@ -66,9 +66,10 @@
         // controlPanel.style.display = "none";
         controlPanel.style.width = "200px";
         controlPanel.style.position = "absolute";
-        controlPanel.style.bottom = "100%";
+        controlPanel.style.bottom = "calc(100% + 70px)";
         controlPanel.style.left = "50%";
         controlPanel.style.transform = "translateX(-50%)";
+        controlPanel.style.backgroundColor = "#FFFFFF";
         controlPanel.appendChild(createItemListContainer());
         controlPanel.appendChild(createFunctionBar());
         controlPanel.appendChild(createControlButton());
