@@ -95,7 +95,7 @@
         const container: HTMLSpanElement = document.createElement("span");
         container.classList.add("icon-item", "icon-font");
         container.appendChild(createWheelbarrowButton(textArea, sendButton));
-        container.appendChild(createControlPanel());
+        // container.appendChild(createControlPanel());
         return container;
     }
 
@@ -128,6 +128,13 @@
         textArea: HTMLTextAreaElement,
         sendButton: HTMLButtonElement
     ): void {
+
+        function generateIntervalTime(size: number) {
+            if (size < 4) return 5000;
+            if (size < 8) return 1600;
+            return 1000;
+        }
+
         if (!isRunning) {
             const strings: String | null = prompt("输入你要发送的独轮车，各句间用英文逗号分隔。");
             if (strings === null) {
@@ -142,7 +149,7 @@
                 if (i == stringArray.length) {
                     i = 0;
                 }
-            }, 2000);
+            }, generateIntervalTime(stringArray.length));
             isRunning = true;
         } else {
             window.clearInterval(handler!);
