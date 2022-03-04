@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "rootDir": "src",
-    "outFile": "bundle.js",
+    "target": "ES6",
+    "jsx": "react"
   }
 }
