@@ -1,44 +1,71 @@
 import * as React from "react";
 import {render} from "react-dom";
-import {createControlPanel} from "./ControlPanel";
+import {ControlPanel} from "./ControlPanel";
+import {Button} from "@geist-ui/core";
 
 (function () {
     "use strict";
 
-    let isRunning: boolean = false;
-    let handler: number | null = null;
-
-    function createWheelbarrowButton(
+    interface WheelbarrowButtonProps {
         textArea: HTMLTextAreaElement,
-        sendButton: HTMLButtonElement
-    ): JSX.Element {
-        return (
-            <button onClick={() => handleClick(textArea, sendButton)}>
-                独轮车
-            </button>
-        );
+        sendButton: HTMLButtonElement,
+        changeVisibility: () => void
     }
 
-    function createWheelbarrowComponent(
+    interface WheelbarrowButtonState {
+
+    }
+
+    class WheelbarrowButton extends React.Component<WheelbarrowButtonProps, WheelbarrowButtonState> {
+        render() {
+            return (
+                <Button onClick={() => this.props.changeVisibility()} auto scale={0.5}>
+                    独轮车
+                </Button>
+            );
+        }
+    }
+
+    interface WheelbarrowComponentProps {
+        textArea: HTMLTextAreaElement,
+        sendButton: HTMLButtonElement,
+    }
+
+    interface WheelbarrowComponentState {
+        visual: boolean
+    }
+
+    class WheelbarrowComponent extends React.Component<WheelbarrowComponentProps, WheelbarrowComponentState> {
+        constructor(props) {
+            super(props);
+            this.state = {visual: false};
+            this.changeVisibility = this.changeVisibility.bind(this);
+        }
+
+        changeVisibility() {this.setState({visual: !this.state.visual});}
+
+        render() {
+            const visual = this.state.visual;
+            return (
+                <span>
+                <WheelbarrowButton textArea={textArea} sendButton={sendButton} changeVisibility={this.changeVisibility}/>
+                <ControlPanel textArea={textArea} sendButton={sendButton} display={visual ? "flex" : "none"}/>
+            </span>
+            );
+        }
+    }
+
+    function Wheelbarrow(
         textArea: HTMLTextAreaElement,
         sendButton: HTMLButtonElement
     ): Node {
         const container: HTMLSpanElement = document.createElement("span");
         container.classList.add("icon-item", "icon-font");
-        render([createWheelbarrowButton(textArea, sendButton), createControlPanel()], container);
+        render(
+            <WheelbarrowComponent sendButton={sendButton} textArea={textArea} />,
+            container
+        );
         return container;
-    }
-
-    function send(
-        textArea: HTMLTextAreaElement,
-        sendButton: HTMLButtonElement,
-        s: string
-    ): void {
-        textArea.value = s;
-        textArea.dispatchEvent(new InputEvent("input"));
-        setTimeout(() => {
-            sendButton.click();
-        }, 50);
     }
 
     function getElements(): [
@@ -54,40 +81,6 @@ import {createControlPanel} from "./ControlPanel";
         return [textArea, sendButton, toolbar];
     }
 
-    function handleClick(
-        textArea: HTMLTextAreaElement,
-        sendButton: HTMLButtonElement
-    ): void {
-
-        function generateIntervalTime(size: number) {
-            if (size < 4) return 5000;
-            if (size < 8) return 1600;
-            return 1000;
-        }
-
-        if (!isRunning) {
-            const strings: String | null = prompt("输入你要发送的独轮车，各句间用英文逗号分隔。");
-            if (strings === null) {
-                return;
-            }
-            const stringArray = strings!.split(",");
-            let i = 0;
-            handler = window.setInterval(() => {
-                send(textArea, sendButton, stringArray[i]);
-                console.log("Sent: " + stringArray[i]);
-                i++;
-                if (i == stringArray.length) {
-                    i = 0;
-                }
-            }, generateIntervalTime(stringArray.length));
-            isRunning = true;
-        } else {
-            window.clearInterval(handler!);
-            isRunning = false;
-            alert("已取消");
-        }
-    }
-
     let textArea: HTMLTextAreaElement | null = null;
     let sendButton: HTMLButtonElement | null = null;
     let toolbar: HTMLDivElement | null = null;
@@ -99,7 +92,7 @@ import {createControlPanel} from "./ControlPanel";
             toolbar !== null
         ) {
             window.clearInterval(getElementsHandler);
-            toolbar.appendChild(createWheelbarrowComponent(textArea, sendButton));
+            toolbar.appendChild(Wheelbarrow(textArea, sendButton));
         }
     }, 500);
 })();
