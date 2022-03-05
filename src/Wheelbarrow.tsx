@@ -42,15 +42,18 @@ import {Button} from "@geist-ui/core";
             this.changeVisibility = this.changeVisibility.bind(this);
         }
 
-        changeVisibility() {this.setState({visual: !this.state.visual});}
+        changeVisibility() {
+            this.setState({visual: !this.state.visual});
+        }
 
         render() {
             const visual = this.state.visual;
             return (
                 <span>
-                <WheelbarrowButton textArea={textArea} sendButton={sendButton} changeVisibility={this.changeVisibility}/>
-                <ControlPanel textArea={textArea} sendButton={sendButton} display={visual ? "flex" : "none"}/>
-            </span>
+                    <WheelbarrowButton textArea={textArea} sendButton={sendButton}
+                                       changeVisibility={this.changeVisibility}/>
+                    <ControlPanel textArea={textArea} sendButton={sendButton} display={visual ? "flex" : "none"}/>
+                </span>
             );
         }
     }
@@ -62,7 +65,7 @@ import {Button} from "@geist-ui/core";
         const container: HTMLSpanElement = document.createElement("span");
         container.classList.add("icon-item", "icon-font");
         render(
-            <WheelbarrowComponent sendButton={sendButton} textArea={textArea} />,
+            <WheelbarrowComponent sendButton={sendButton} textArea={textArea}/>,
             container
         );
         return container;

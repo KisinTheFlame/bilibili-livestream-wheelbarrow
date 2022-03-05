@@ -2,9 +2,7 @@ import * as React from "react";
 import {Button, Textarea} from "@geist-ui/core";
 
 function generateIntervalTime(size: number) {
-    if (size < 4) return 5000;
-    if (size < 8) return 1600;
-    return 1000;
+    return Math.max(6000 / size, 1000) + 100;
 }
 
 function send(
@@ -34,20 +32,17 @@ interface ControlPanelState {
 export class ControlPanel extends React.Component<ControlPanelProps, ControlPanelState> {
     constructor(props) {
         super(props);
-        this.setState({
+        this.state = {
             isRunning: false,
             handler: null,
             text: "",
-        });
+        };
     }
 
     handleClick() {
         if (!this.state.isRunning) {
             const messages = this.state.text.split("\n").filter((s) => s.length > 0);
             if (messages.length === 0) {
-                return;
-            }
-            if (messages.some((s) => s.length > 20)) {
                 return;
             }
             let index = 0;
@@ -70,6 +65,7 @@ export class ControlPanel extends React.Component<ControlPanelProps, ControlPane
     }
 
     render() {
+        const isRunning = this.state.isRunning;
         return (
             <div className={"control-panel"}
                  style={{
@@ -88,8 +84,9 @@ export class ControlPanel extends React.Component<ControlPanelProps, ControlPane
                         this.setState({text: e.target.value});
                     }}
                     height="300px"
+                    placeholder="在此输入要发送的弹幕，一句一换行"
                 />
-                <Button onClick={() => this.handleClick()}>Start/Stop</Button>
+                <Button onClick={() => this.handleClick()}>{isRunning ? "Stop" : "Start"}</Button>
             </div>
         );
     }
