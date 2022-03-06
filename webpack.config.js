@@ -1,7 +1,7 @@
-const path = require('path')
+const path = require("path")
 
 module.exports = {
-    entry: "./src/Wheelbarrow.tsx",
+    entry: "./src/index.tsx",
     output: {
         filename: "main.js",
         path: path.resolve(__dirname, "dist"),
@@ -15,7 +15,7 @@ module.exports = {
                     options: {
                         presets: [
                             ["@babel/preset-env"],
-                            ["@babel/preset-react", {runtime: 'automatic'}],
+                            ["@babel/preset-react", {runtime: "automatic"}],
                         ],
                         plugins: [
                             ["@babel/plugin-transform-runtime"],
@@ -28,7 +28,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".js", '.jsx'],
+        extensions: [".tsx", ".ts", ".js", ".jsx"],
     },
     mode: "production",
-}
+};
