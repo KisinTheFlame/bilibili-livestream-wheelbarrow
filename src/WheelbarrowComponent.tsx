@@ -20,7 +20,7 @@ export class WheelbarrowComponent extends React.Component<WheelbarrowComponentPr
 
     changeVisibility = () => {
         this.setState({visual: !this.state.visual});
-    }
+    };
 
     render() {
         return (
