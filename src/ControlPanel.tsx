@@ -39,7 +39,7 @@ export class ControlPanel extends React.Component<ControlPanelProps, ControlPane
         };
     }
 
-    handleClick() {
+    toggle() {
         if (!this.state.isRunning) {
             const messages = this.state.text.split("\n").filter((s) => s.length > 0);
             if (messages.length === 0) {
@@ -84,10 +84,15 @@ export class ControlPanel extends React.Component<ControlPanelProps, ControlPane
                     onChange={(e) => {
                         this.setState({text: e.target.value});
                     }}
+                    onKeyDown={(e) => {
+                        if(e.ctrlKey && e.key === "Enter") {
+                            this.toggle();
+                        }
+                    }}
                     height="300px"
                     placeholder="在此输入要发送的弹幕，一句一换行"
                 />
-                <Button onClick={() => this.handleClick()}>{isRunning ? "Stop" : "Start"}</Button>
+                <Button onClick={() => this.toggle()}>{isRunning ? "Stop" : "Start"}</Button>
             </div>
         );
     }
