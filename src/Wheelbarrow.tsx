@@ -1,62 +1,9 @@
 import * as React from "react";
 import {render} from "react-dom";
-import {ControlPanel} from "./ControlPanel";
-import {Button} from "@geist-ui/core";
+import {WheelbarrowComponent} from "./WheelbarrowComponent";
 
 (function () {
     "use strict";
-
-    interface WheelbarrowButtonProps {
-        textArea: HTMLTextAreaElement,
-        sendButton: HTMLButtonElement,
-        changeVisibility: () => void
-    }
-
-    interface WheelbarrowButtonState {
-
-    }
-
-    class WheelbarrowButton extends React.Component<WheelbarrowButtonProps, WheelbarrowButtonState> {
-        render() {
-            return (
-                <Button onClick={() => this.props.changeVisibility()} auto scale={0.5}>
-                    独轮车
-                </Button>
-            );
-        }
-    }
-
-    interface WheelbarrowComponentProps {
-        textArea: HTMLTextAreaElement,
-        sendButton: HTMLButtonElement,
-    }
-
-    interface WheelbarrowComponentState {
-        visual: boolean
-    }
-
-    class WheelbarrowComponent extends React.Component<WheelbarrowComponentProps, WheelbarrowComponentState> {
-        constructor(props) {
-            super(props);
-            this.state = {visual: false};
-            this.changeVisibility = this.changeVisibility.bind(this);
-        }
-
-        changeVisibility() {
-            this.setState({visual: !this.state.visual});
-        }
-
-        render() {
-            const visual = this.state.visual;
-            return (
-                <span>
-                    <WheelbarrowButton textArea={textArea} sendButton={sendButton}
-                                       changeVisibility={this.changeVisibility}/>
-                    <ControlPanel textArea={textArea} sendButton={sendButton} display={visual ? "flex" : "none"}/>
-                </span>
-            );
-        }
-    }
 
     function Wheelbarrow(
         textArea: HTMLTextAreaElement,
@@ -71,11 +18,7 @@ import {Button} from "@geist-ui/core";
         return container;
     }
 
-    function getElements(): [
-            HTMLTextAreaElement | null,
-            HTMLButtonElement | null,
-            HTMLDivElement | null
-    ] {
+    function getElements(): [HTMLTextAreaElement | null, HTMLButtonElement | null, HTMLDivElement | null] {
         const panel: HTMLElement | null = document.getElementById("chat-control-panel-vm");
         if (panel === null) return [null, null, null];
         const textArea: HTMLTextAreaElement | null = panel.getElementsByTagName("textarea")[0];
@@ -87,7 +30,7 @@ import {Button} from "@geist-ui/core";
     let textArea: HTMLTextAreaElement | null = null;
     let sendButton: HTMLButtonElement | null = null;
     let toolbar: HTMLDivElement | null = null;
-    let getElementsHandler: number = window.setInterval(() => {
+    const getElementsHandler: number = window.setInterval(() => {
         [textArea, sendButton, toolbar] = getElements();
         if (
             textArea !== null &&

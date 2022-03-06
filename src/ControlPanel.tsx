@@ -67,17 +67,18 @@ export class ControlPanel extends React.Component<ControlPanelProps, ControlPane
     render() {
         const isRunning = this.state.isRunning;
         return (
-            <div className={"control-panel"}
-                 style={{
-                     display: this.props.display,
-                     flexDirection: "column",
-                     width: "300px",
-                     position: "absolute",
-                     bottom: "calc(100% + 70px)",
-                     left: "50%",
-                     transform: "translateX(-50%)",
-                     backgroundColor: "#FFFFFF",
-                 }}
+            <div
+                className={"control-panel"}
+                style={{
+                    display: this.props.display,
+                    flexDirection: "column",
+                    width: "300px",
+                    position: "absolute",
+                    bottom: "calc(100% + 70px)",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    backgroundColor: "#FFFFFF",
+                }}
             >
                 <Textarea
                     onChange={(e) => {
