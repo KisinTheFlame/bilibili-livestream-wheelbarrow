@@ -15,24 +15,31 @@ export class WheelbarrowComponent extends React.Component<WheelbarrowComponentPr
     constructor(props) {
         super(props);
         this.state = {visual: false};
-        this.changeVisibility = this.changeVisibility.bind(this);
     }
 
     changeVisibility = () => {
         this.setState({visual: !this.state.visual});
     };
 
+    send = (s: string) => {
+        this.props.textArea.value = s;
+        this.props.textArea.dispatchEvent(new InputEvent("input"));
+        setTimeout(() => {
+            this.props.sendButton.click();
+        }, 50);
+    }
+
+
     render() {
         return (
             <span>
                 <EntryButton
-                    textArea={this.props.textArea}
-                    sendButton={this.props.sendButton}
-                    changeVisibility={this.changeVisibility}/>
+                    changeVisibility={this.changeVisibility}
+                />
                 <ControlPanel
-                    textArea={this.props.textArea}
-                    sendButton={this.props.sendButton}
-                    display={this.state.visual ? "flex" : "none"}/>
+                    display={this.state.visual ? "flex" : "none"}
+                    send={this.send}
+                />
             </span>
         );
     }

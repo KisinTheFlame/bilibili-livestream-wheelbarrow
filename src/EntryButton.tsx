@@ -2,8 +2,6 @@ import * as React from "react";
 import {Button} from "@geist-ui/core";
 
 interface EntryButtonProps {
-    textArea: HTMLTextAreaElement,
-    sendButton: HTMLButtonElement,
     changeVisibility: () => void
 }
 

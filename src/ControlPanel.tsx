@@ -5,22 +5,9 @@ function generateIntervalTime(size: number) {
     return Math.max(6000 / size, 1000) + 100;
 }
 
-function send(
-    textArea: HTMLTextAreaElement,
-    sendButton: HTMLButtonElement,
-    s: string
-): void {
-    textArea.value = s;
-    textArea.dispatchEvent(new InputEvent("input"));
-    setTimeout(() => {
-        sendButton.click();
-    }, 50);
-}
-
 interface ControlPanelProps {
-    textArea: HTMLTextAreaElement,
-    sendButton: HTMLButtonElement,
-    display: string
+    display: string,
+    send: (string) => void;
 }
 
 interface ControlPanelState {
@@ -48,7 +35,7 @@ export class ControlPanel extends React.Component<ControlPanelProps, ControlPane
             let index = 0;
             this.setState({
                 handler: window.setInterval(() => {
-                    send(this.props.textArea, this.props.sendButton, messages[index]);
+                    this.props.send(messages[index]);
                     console.log("Sent: " + messages[index]);
                     index++;
                     if (index === messages.length) {
