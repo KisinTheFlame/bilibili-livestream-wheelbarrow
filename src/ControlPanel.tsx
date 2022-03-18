@@ -7,7 +7,7 @@ function generateIntervalTime(size: number) {
 
 interface ControlPanelProps {
     display: string,
-    send: (string) => void;
+    sendMessage: (string) => void;
 }
 
 interface ControlPanelState {
@@ -26,7 +26,7 @@ export class ControlPanel extends React.Component<ControlPanelProps, ControlPane
         };
     }
 
-    toggle() {
+    toggle = () => {
         if (!this.state.isRunning) {
             const messages = this.state.text.split("\n").filter((s) => s.length > 0);
             if (messages.length === 0) {
@@ -35,7 +35,7 @@ export class ControlPanel extends React.Component<ControlPanelProps, ControlPane
             let index = 0;
             this.setState({
                 handler: window.setInterval(() => {
-                    this.props.send(messages[index]);
+                    this.props.sendMessage(messages[index]);
                     console.log("Sent: " + messages[index]);
                     index++;
                     if (index === messages.length) {
@@ -77,9 +77,9 @@ export class ControlPanel extends React.Component<ControlPanelProps, ControlPane
                         }
                     }}
                     height="300px"
-                    placeholder="在此输入要发送的弹幕，一句一换行"
+                    placeholder="在此输入要发送的弹幕，一句一换行。Ctrl+Enter切换独轮车启停。"
                 />
-                <Button onClick={() => this.toggle()}>{isRunning ? "Stop" : "Start"}</Button>
+                <Button onClick={this.toggle}>{isRunning ? "Stop" : "Start"}</Button>
             </div>
         );
     }

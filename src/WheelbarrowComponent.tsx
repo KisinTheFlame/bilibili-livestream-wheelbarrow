@@ -21,14 +21,13 @@ export class WheelbarrowComponent extends React.Component<WheelbarrowComponentPr
         this.setState({visual: !this.state.visual});
     };
 
-    send = (s: string) => {
+    sendMessage = (s: string) => {
         this.props.textArea.value = s;
         this.props.textArea.dispatchEvent(new InputEvent("input"));
         setTimeout(() => {
             this.props.sendButton.click();
         }, 50);
     }
-
 
     render() {
         return (
@@ -38,7 +37,7 @@ export class WheelbarrowComponent extends React.Component<WheelbarrowComponentPr
                 />
                 <ControlPanel
                     display={this.state.visual ? "flex" : "none"}
-                    send={this.send}
+                    sendMessage={this.sendMessage}
                 />
             </span>
         );
