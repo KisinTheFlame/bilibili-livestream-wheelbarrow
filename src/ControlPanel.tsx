@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Button, Textarea} from "@geist-ui/core";
+import {Button, Radio, Spacer, Textarea} from "@geist-ui/core";
 
 function generateIntervalTime(size: number) {
     return Math.max(6000 / size, 1000) + 100;
@@ -72,13 +72,24 @@ export class ControlPanel extends React.Component<ControlPanelProps, ControlPane
                         this.setState({text: e.target.value});
                     }}
                     onKeyDown={(e) => {
-                        if(e.ctrlKey && e.key === "Enter") {
+                        if (e.ctrlKey && e.key === "Enter") {
                             this.toggle();
                         }
                     }}
                     height="300px"
                     placeholder="在此输入要发送的弹幕，一句一换行。Ctrl+Enter切换独轮车启停。"
                 />
+                <Spacer/>
+                <div>
+                    <div style={{width: "auto", float: "left"}}>
+                        最大字数：
+                    </div>
+                    <Radio.Group initialValue="20" useRow style={{float: "left"}}>
+                        <Radio value="20">20字</Radio>
+                        <Radio value="40">40字</Radio>
+                    </Radio.Group>
+                </div>
+                <Spacer/>
                 <Button onClick={this.toggle}>{isRunning ? "Stop" : "Start"}</Button>
             </div>
         );
